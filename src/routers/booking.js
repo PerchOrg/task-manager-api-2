@@ -12,7 +12,12 @@ router.post('/bookings', auth, async (req, res) => {
     })
     const session = await Session.findById(req.body.session)
     const movie = await Movie.findById(session.movie)
-
+    if(!movie) {
+      return res.status(400).send({ error: `No such movie` })
+    }
+    if(req.user.age < movie.ageLimit) {
+      return res.status(403).send({ error: `You must be at least ${movie.ageLimit} years old` })
+    }
     if(req.user.age < movie.ageLimit) {
       return res.status(403).send({ error: `You must be at least ${movie.ageLimit} years old` })
     }
