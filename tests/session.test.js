@@ -37,6 +37,13 @@ test('Should create session for user', async () => {
     })
 })
 
+test('Should not create session for unauthenticated user', async () => {
+  await request(app)
+    .post('/session')
+    .send()
+    .expect(401)
+})
+
 test('Should not create session if user does not have permission', async () => {
   request(app)
     .post('/session')

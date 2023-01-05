@@ -1,20 +1,13 @@
 const request = require('supertest')
 const app = require('../src/app')
 const Booking = require('../src/models/booking')
-const User = require('../src/models/user')
 const { 
-  sessionOneId, 
-  userOneId,
+  sessionOneId,
   userOne,
-  userTwoId,
   userTwo,
-  userThreeId,
   userThree,
   bookingOne,
-  movieOneId,
   movieOne,
-  bookingTwo,
-  bookingThree,
   setupBookingDatabase, 
   setupDatabase 
 } = require('./fixtures/db')

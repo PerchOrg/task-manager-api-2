@@ -3,7 +3,6 @@ const app = require('../src/app')
 const Movie = require('../src/models/movie')
 const {
   userOne, 
-  userThreeId,
   userThree,
   setupDatabase 
 } = require('./fixtures/db')
@@ -23,6 +22,13 @@ test('Should create movie for user', async () => {
 
     const movie = await Movie.findById(response.body._id)
     expect(movie).not.toBeNull()
+})
+
+test('Should not create movie for unauthenticated user', async () => {
+  await request(app)
+    .post('/movie')
+    .send()
+    .expect(401)
 })
 
 test('Should not create movie if user does not have permission', async () => {

@@ -3,15 +3,8 @@ const jwt = require('jsonwebtoken')
 const app = require('../src/app')
 const User = require('../src/models/user')
 const { 
-  sessionOneId, 
   userOneId,
   userOne,
-  userTwoId,
-  userTwo,
-  bookingOne,
-  bookingTwo,
-  bookingThree,
-  setupBookingDatabase, 
   setupDatabase 
 } = require('./fixtures/db')
 

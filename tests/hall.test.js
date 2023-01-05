@@ -24,6 +24,13 @@ test('Should create hall for user', async () => {
     expect(hall).not.toBeNull()
 })
 
+test('Should not create hall for unauthenticated user', async () => {
+    await request(app)
+      .post('/hall')
+      .send()
+      .expect(401)
+  })
+
 test('Should not create hall if user does not have permission', async () => {
   request(app)
     .post('/hall')
