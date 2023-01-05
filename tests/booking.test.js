@@ -75,7 +75,7 @@ test('Should fetch user bookings', async () => {
     expect(response.body.length).toEqual(2)
 })
 
-test('Should fetch user bookings', async () => {
+test('Should not fetch other user bookings', async () => {
     const response = await request(app)
       .get('/bookings')
       .set('Authorization', `Bearer ${userTwo.tokens[0].token}`)
