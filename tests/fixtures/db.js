@@ -10,12 +10,38 @@ const userOneId = new mongoose.Types.ObjectId()
 const userOne = {
   _id: userOneId,
   name: "perch",
-  email: "perch@solvee.am",
+  email: "perch1@solvee.am",
   password: "123321qwe",
   role: "admin",
   age: 18,
   tokens: [{
     token: jwt.sign({_id: userOneId, role: "admin"}, process.env.JWT_SECRET)
+  }]
+}
+
+const userTwoId = new mongoose.Types.ObjectId()
+const userTwo = {
+  _id: userTwoId,
+  name: "perch",
+  email: "perch2@solvee.am",
+  password: "123321qwe",
+  role: "admin",
+  age: 18,
+  tokens: [{
+    token: jwt.sign({_id: userTwoId, role: "admin"}, process.env.JWT_SECRET)
+  }]
+}
+
+const userThreeId = new mongoose.Types.ObjectId()
+const userThree = {
+  _id: userThreeId,
+  name: "perch",
+  email: "perch3@solvee.am",
+  password: "123321qwe",
+  role: "user",
+  age: 5,
+  tokens: [{
+    token: jwt.sign({_id: userThreeId, role: "user"}, process.env.JWT_SECRET)
   }]
 }
 
@@ -43,11 +69,24 @@ const sessionOne = {
     hall: hallOneId,
 }
 
-const bookingOneId = new mongoose.Types.ObjectId()
 const bookingOne = {
-    _id: bookingOneId,
+    _id: new mongoose.Types.ObjectId(),
     seatNumber: 12,
     owner: userOneId,
+    session: sessionOneId,
+}
+
+const bookingTwo = {
+    _id: new mongoose.Types.ObjectId(),
+    seatNumber: 12,
+    owner: userOneId,
+    session: sessionOneId,
+}
+
+const bookingThree = {
+    _id: new mongoose.Types.ObjectId(),
+    seatNumber: 12,
+    owner: userTwoId,
     session: sessionOneId,
 }
 
@@ -58,6 +97,11 @@ const setupDatabase = async() => {
     await Movie.deleteMany()
     await Session.deleteMany()
     await new User(userOne).save()
+    await new User(userTwo).save()
+    await new User(userThree).save()
+    await new Booking(bookingOne).save()
+    await new Booking(bookingTwo).save()
+    await new Booking(bookingThree).save()
 }
 
 const setupBookingDatabase = async () => {
@@ -80,14 +124,19 @@ const setupSessionDatabase = async () => {
 module.exports = {
     userOneId,
     userOne,
+    userTwoId,
+    userTwo,
+    userThreeId,
+    userThree,
     hallOneId,
     hallOne,
     movieOneId,
     movieOne,
     sessionOneId,
     sessionOne,
-    bookingOneId,
     bookingOne,
+    bookingTwo,
+    bookingThree,
     setupDatabase,
     setupBookingDatabase,
     setupSessionDatabase

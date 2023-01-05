@@ -4,7 +4,8 @@ const Session = require('../src/models/session')
 const { 
   movieOneId, 
   hallOneId, 
-  userOne, 
+  userOne,
+  userThree,
   setupDatabase, 
   setupSessionDatabase 
 } = require('./fixtures/db')
@@ -34,4 +35,12 @@ test('Should create session for user', async () => {
       movie: movieOneId,
       hall: hallOneId
     })
+})
+
+test('Should not create session if user does not have permission', async () => {
+  request(app)
+    .post('/session')
+    .set('Authorization', `Bearer ${userThree.tokens[0].token}`)
+    .send()
+    .expect(401)
 })

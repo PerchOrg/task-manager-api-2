@@ -20,7 +20,6 @@ test('Should signup a new user', async () => {
 
   const user = await User.findById(response.body.user._id)
   expect(user).not.toBeNull()
-
   expect(response.body).toMatchObject({
     user: {
       name: "perch test",

@@ -18,9 +18,6 @@ router.post('/bookings', auth, async (req, res) => {
     if(req.user.age < movie.ageLimit) {
       return res.status(403).send({ error: `You must be at least ${movie.ageLimit} years old` })
     }
-    if(req.user.age < movie.ageLimit) {
-      return res.status(403).send({ error: `You must be at least ${movie.ageLimit} years old` })
-    }
     try {
         await booking.save()
         res.status(201).send(booking)

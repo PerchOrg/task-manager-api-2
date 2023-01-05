@@ -3,7 +3,8 @@ const app = require('../src/app')
 const Hall = require('../src/models/hall')
 const {
   userOne, 
-  setupDatabase 
+  setupDatabase,
+  userThree
 } = require('./fixtures/db')
 
 beforeEach(setupDatabase)
@@ -21,4 +22,12 @@ test('Should create hall for user', async () => {
 
     const hall = await Hall.findById(response.body._id)
     expect(hall).not.toBeNull()
+})
+
+test('Should not create hall if user does not have permission', async () => {
+  request(app)
+    .post('/hall')
+    .set('Authorization', `Bearer ${userThree.tokens[0].token}`)
+    .send()
+    .expect(401)
 })

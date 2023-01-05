@@ -6,8 +6,7 @@ const auth = async (req, res, next, role='user') => {
     const token = req.header('Authorization').replace('Bearer ', '')
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
     const user = await User.findOne({_id: decoded._id, 'tokens.token': token})
-    
-    if(!user && decoded.role !== role){
+    if(!user || decoded.role !== "admin" && decoded.role !== role){
       throw new Error()
     }
 
@@ -16,7 +15,6 @@ const auth = async (req, res, next, role='user') => {
     
     next();
   } catch (e){
-
     res.status(401).send({error: 'Please authenticate'})
   }
 }
