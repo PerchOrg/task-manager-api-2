@@ -37,6 +37,15 @@ test('Should create session for user', async () => {
     })
 })
 
+test('Should not create if session data is invalid', async () => {
+  const sessionData = {};
+  await request(app)
+    .post('/session')
+    .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+    .send(sessionData)
+    .expect(400);
+});
+
 test('Should not create session for unauthenticated user', async () => {
   await request(app)
     .post('/session')

@@ -11,6 +11,9 @@ router.post('/bookings', auth, async (req, res) => {
         owner: req.user._id
     })
     const session = await Session.findById(req.body.session)
+    if(!session) {
+      return res.status(400).send({ error: `No such movie` })
+    }
     const movie = await Movie.findById(session.movie)
     if(!movie) {
       return res.status(400).send({ error: `No such movie` })

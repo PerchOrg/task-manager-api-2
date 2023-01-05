@@ -32,6 +32,15 @@ test('Should signup a new user', async () => {
   expect(user.password).not.toBe("123321qwetest")
 })
 
+test('Should not create if user data is invalid', async () => {
+  const hallData = {};
+  await request(app)
+    .post('/hall')
+    .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+    .send(hallData)
+    .expect(400);
+});
+
 test('Should login existing user', async () => {
   const response = await request(app).post('/users/login').send({
     email: userOne.email,

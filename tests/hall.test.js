@@ -24,6 +24,15 @@ test('Should create hall for user', async () => {
     expect(hall).not.toBeNull()
 })
 
+test('Should not create if hall data is invalid', async () => {
+  const hallData = {};
+  await request(app)
+    .post('/hall')
+    .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+    .send(hallData)
+    .expect(400);
+});
+
 test('Should not create hall for unauthenticated user', async () => {
     await request(app)
       .post('/hall')

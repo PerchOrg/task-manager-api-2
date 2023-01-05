@@ -37,6 +37,15 @@ test('Should create booking for user', async () => {
     })
 })
 
+test('Should not create if booking data is invalid', async () => {
+  const bookingData = {};
+  await request(app)
+    .post('/bookings')
+    .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+    .send(bookingData)
+    .expect(400);
+});
+
 test('Should not create booking for unauthenticated user', async () => {
   expect(userOne.age).toBeGreaterThan(movieOne.ageLimit)
   await request(app)
@@ -64,6 +73,15 @@ test('Should fetch user bookings', async () => {
       .send()
       .expect(200)
     expect(response.body.length).toEqual(2)
+})
+
+test('Should fetch user bookings', async () => {
+    const response = await request(app)
+      .get('/bookings')
+      .set('Authorization', `Bearer ${userTwo.tokens[0].token}`)
+      .send()
+      .expect(200)
+    expect(response.body.length).not.toEqual(2)
 })
 
 test('Should not get bookings for unauthenticated user', async () => {

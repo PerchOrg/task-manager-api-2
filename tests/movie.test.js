@@ -24,6 +24,15 @@ test('Should create movie for user', async () => {
     expect(movie).not.toBeNull()
 })
 
+test('Should not create if movie data is invalid', async () => {
+  const movieData = {};
+  await request(app)
+    .post('/movie')
+    .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+    .send(movieData)
+    .expect(400);
+});
+
 test('Should not create movie for unauthenticated user', async () => {
   await request(app)
     .post('/movie')
