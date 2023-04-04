@@ -24,5 +24,11 @@ jobs:
 
       - name: Post Jest coverage report
         uses: ArtiomTr/jest-coverage-report-action@v2
+        - name: Test only
+        if: github.event_name != 'push'
+        run: npm test
+      - name: Test + Publish Coverage
+        uses: ArtiomTr/jest-coverage-report-action@v2.0-rc.6
+        if: github.event_name == 'push'
         with:
           threshold: 80
