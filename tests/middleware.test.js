@@ -54,7 +54,7 @@ describe('auth middleware', () => {
     expect(res.body).toMatchObject({ error: 'Please authenticate' });
   });
 
-  it('should return a 401 if user does not have permission', async () => {
+  it('should return a 401 if user does not have admin permission', async () => {
     const expiredToken = jwt.sign({_id: userOneId, role: "wrong role"}, process.env.JWT_SECRET)
     const res = await request(app)
       .get('/users/me')

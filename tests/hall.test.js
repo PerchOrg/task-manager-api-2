@@ -40,7 +40,7 @@ test('Should not create hall for unauthenticated user', async () => {
       .expect(401)
   })
 
-test('Should not create hall if user does not have permission', async () => {
+test('Should not create hall if user does not have admin permission', async () => {
   request(app)
     .post('/hall')
     .set('Authorization', `Bearer ${userThree.tokens[0].token}`)

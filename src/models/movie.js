@@ -21,6 +21,9 @@ const Movie = mongoose.model('Movie', {
                 throw new Error('Age must be a positive number')
             }
         }
+    },
+    poster: {
+        type: Buffer,
     }
 })
 

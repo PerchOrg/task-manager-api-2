@@ -91,7 +91,7 @@ test('Should not get bookings for unauthenticated user', async () => {
     .expect(401)
 })
 
-test('Should delete other user bookings', async () => {
+test('Should delete user bookings', async () => {
     request(app)
     .delete(`/bookings/${bookingOne._id}`)
     .set('Authorization', `Bearer ${userOne.tokens[0].token}`)

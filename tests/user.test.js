@@ -33,11 +33,10 @@ test('Should signup a new user', async () => {
 })
 
 test('Should not create if user data is invalid', async () => {
-  const hallData = {};
+  const userData = {};
   await request(app)
-    .post('/hall')
-    .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
-    .send(hallData)
+    .post('/users')
+    .send(userData)
     .expect(400);
 });
 
@@ -80,6 +79,7 @@ test('Should delete account for user', async () => {
         .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
         .send()
         .expect(200)
+        
     const user = await User.findById(userOneId)
     expect(user).toBeNull()
 })

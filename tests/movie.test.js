@@ -9,20 +9,47 @@ const {
 
 beforeEach(setupDatabase)
 
-test('Should create movie for user', async () => {
+test('Should create a new movie', async () => {
+  const movieData = {
+    filmName: 'Test Movie',
+    genre: 'horror',
+    ageLimit: 12,
+    poster: 'img.png',
+  };
+
   const response = await request(app)
     .post('/movie')
     .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
-    .send({
-        filmName: "Mko",
-        genre: true,
-        ageLimit: 12
-    })
-    .expect(201)
+    .field('filmName', movieData.filmName)
+    .field('genre', movieData.genre)
+    .field('ageLimit', movieData.ageLimit)
+    .attach('poster', './tests/fixtures/img.png')
+    .expect(201);
 
-    const movie = await Movie.findById(response.body._id)
-    expect(movie).not.toBeNull()
-})
+  const movie = await Movie.findById(response.body._id);
+  expect(movie).not.toBeNull();
+  expect(movie.filmName).toBe(movieData.filmName);
+  expect(movie.ageLimit).toBe(movieData.ageLimit);
+  expect(movie.genre).toBe(movieData.genre);
+});
+
+test('Should not create a new movie if poster img exstension is invalid', async () => {
+  const movieData = {
+    filmName: 'Test Movie',
+    genre: 'horror',
+    ageLimit: 12,
+  };
+
+  await request(app)
+    .post('/movie')
+    .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+    .field('filmName', movieData.filmName)
+    .field('genre', movieData.genre)
+    .field('ageLimit', movieData.ageLimit)
+    .attach('poster', './tests/fixtures/img.svg')
+    .expect(400)
+    .expect({ error: 'please upload an image' });
+});
 
 test('Should not create if movie data is invalid', async () => {
   const movieData = {};
@@ -40,7 +67,7 @@ test('Should not create movie for unauthenticated user', async () => {
     .expect(401)
 })
 
-test('Should not create movie if user does not have permission', async () => {
+test('Should not create movie if user does not have admin permission', async () => {
   request(app)
     .post('/movie')
     .set('Authorization', `Bearer ${userThree.tokens[0].token}`)

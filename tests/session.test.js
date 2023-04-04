@@ -53,7 +53,7 @@ test('Should not create session for unauthenticated user', async () => {
     .expect(401)
 })
 
-test('Should not create session if user does not have permission', async () => {
+test('Should not create session if user does not have admin permission', async () => {
   request(app)
     .post('/session')
     .set('Authorization', `Bearer ${userThree.tokens[0].token}`)
