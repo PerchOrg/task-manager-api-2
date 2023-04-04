@@ -14,5 +14,5 @@ app.use(sessionRouter)
 app.use(movieRouter)
 app.use(bookingRouter)
 app.use(hallRouter)
-console.log("test")
+
 module.exports = app;
