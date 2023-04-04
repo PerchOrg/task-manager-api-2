@@ -25,5 +25,4 @@ jobs:
       - name: Post Jest coverage report
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
           threshold: 80
