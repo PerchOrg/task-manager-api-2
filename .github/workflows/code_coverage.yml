@@ -2,7 +2,7 @@ name: Code Coverage
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, master]
 
 jobs:
   coverage:
@@ -23,15 +23,8 @@ jobs:
     - name: Run tests with coverage
       run: npm test
 
-    - name: 'coverage'
-      on:
-          pull_request_target:
-              branches:
-                  - master
-                  - main
-      jobs:
-          coverage:
-              runs-on: ubuntu-latest
-              steps:
-                  - uses: actions/checkout@v3
-                  - uses: ArtiomTr/jest-coverage-report-action@v2
+    - name: Post Jest coverage report
+      uses: ArtiomTr/jest-coverage-report-action@v2
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        threshold: 80
