@@ -24,5 +24,7 @@ jobs:
       run: npm test
 
     - name: Post Jest coverage report
-      uses: actions/checkout@v3
       uses: ArtiomTr/jest-coverage-report-action@v2
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        threshold: 80
